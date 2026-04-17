@@ -1,101 +1,82 @@
-import Image from "next/image";
+import Image from 'next/image'
+import Link from 'next/link'
+import { GraduationCap, School } from 'lucide-react'
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className="min-h-screen bg-[#F7F6F3] flex flex-col">
+      {/* 메인 */}
+      <main className="flex-1 flex items-center justify-center px-6 py-12">
+        <div className="max-w-3xl w-full text-center">
+          {/* 교표 + 타이틀 */}
+          <div className="mb-10">
             <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/duksoo-logo.png"
+              alt="덕수고등학교 교표"
+              width={256}
+              height={256}
+              priority
+              unoptimized
+              className="h-72 w-72 mx-auto mb-4 object-contain drop-shadow-sm"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <p className="text-[11px] tracking-[0.25em] text-[#1B2A4A]/60 mb-2">
+              DUKSOO HIGH SCHOOL · SINCE 1910
+            </p>
+            <h1 className="text-3xl font-bold text-[#1E293B] mb-2">
+              DUKSOO AI Online School
+            </h1>
+            <p className="text-sm text-[#64748B]">
+              이용할 서비스를 선택하세요
+            </p>
+          </div>
+
+          {/* 두 카드 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-xl mx-auto">
+            {/* 교무실 */}
+            <Link
+              href="/office/login"
+              className="group relative rounded-2xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+            >
+              <div className="h-14 w-14 rounded-xl bg-[#1B2A4A] text-white flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <School className="h-7 w-7" />
+              </div>
+              <h2 className="text-lg font-bold text-[#1E293B] mb-1">
+                AI 온라인 교무실
+              </h2>
+              <p className="text-sm text-[#64748B] mb-4">
+                수업·세특·상담·캘린더
+              </p>
+              <span className="inline-block rounded-full bg-[#1B2A4A] text-white text-sm px-5 py-2 group-hover:bg-[#3B82F6] transition-colors">
+                교사 입장
+              </span>
+            </Link>
+
+            {/* 교실 */}
+            <Link
+              href="/classroom/login"
+              className="group relative rounded-2xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
+            >
+              <div className="h-14 w-14 rounded-xl bg-[#3B82F6] text-white flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <GraduationCap className="h-7 w-7" />
+              </div>
+              <h2 className="text-lg font-bold text-[#1E293B] mb-1">
+                AI 온라인 교실
+              </h2>
+              <p className="text-sm text-[#64748B] mb-4">
+                AI와 함께하는 학습 공간
+              </p>
+              <span className="inline-block rounded-full bg-[#3B82F6] text-white text-sm px-5 py-2 group-hover:bg-[#2563EB] transition-colors">
+                학생·교사 입장
+              </span>
+            </Link>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* 푸터 */}
+      <footer className="text-center py-6 text-[11px] text-[#94A3B8]">
+        덕수고등학교 · 교직원 및 재학생 전용 서비스
       </footer>
     </div>
-  );
+  )
 }
