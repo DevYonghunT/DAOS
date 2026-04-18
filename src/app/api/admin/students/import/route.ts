@@ -101,6 +101,14 @@ export async function POST(req: Request) {
       created++
     }
 
+    // 이전 학년도의 is_current를 false로 내림 (한 학생에 current가 하나만 유지)
+    await supabase
+      .from('student_enrollments')
+      .update({ is_current: false })
+      .eq('student_id', profileId)
+      .neq('academic_year', academicYear)
+      .eq('is_current', true)
+
     // Enrollment (중복 무시)
     const { error: eErr } = await supabase
       .from('student_enrollments')

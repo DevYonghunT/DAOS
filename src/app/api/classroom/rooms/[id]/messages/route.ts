@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserContext, isTeacher, isStudent } from '@/lib/auth/context'
+import { verifyRoomMember } from '@/lib/classroom/access'
 
 export const runtime = 'nodejs'
 type Params = { params: Promise<{ id: string }> }
@@ -11,6 +12,9 @@ export async function GET(req: Request, { params }: Params) {
   const supabase = await createClient()
   const ctx = await getCurrentUserContext(supabase)
   if (!ctx) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  if (!(await verifyRoomMember(supabase, id, ctx))) {
+    return NextResponse.json({ error: 'not_a_member' }, { status: 403 })
+  }
 
   const url = new URL(req.url)
   const cursor = url.searchParams.get('cursor')
@@ -68,6 +72,9 @@ export async function POST(req: Request, { params }: Params) {
   const supabase = await createClient()
   const ctx = await getCurrentUserContext(supabase)
   if (!ctx) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  if (!(await verifyRoomMember(supabase, id, ctx))) {
+    return NextResponse.json({ error: 'not_a_member' }, { status: 403 })
+  }
 
   let body: { content: string }
   try { body = await req.json() } catch { return NextResponse.json({ error: 'invalid_json' }, { status: 400 }) }

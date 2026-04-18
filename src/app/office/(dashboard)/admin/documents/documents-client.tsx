@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { UploadDocumentDialog, type UploadResult } from './upload-dialog'
+import { UploadDocumentDialog } from './upload-dialog'
 import { cn } from '@/lib/utils'
 
 type DocSummary = {
@@ -115,7 +115,7 @@ export function DocumentsClient() {
     }
   }
 
-  const handleUploaded = (_: UploadResult) => {
+  const handleUploaded = () => {
     load()
     if (expandedId) {
       void loadDetail(expandedId).then(() => {

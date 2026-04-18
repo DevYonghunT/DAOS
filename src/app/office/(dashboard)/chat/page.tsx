@@ -102,7 +102,7 @@ export default async function ChatPage({ searchParams }: PageProps) {
                 return (
                   <li key={c.id}>
                     <Link
-                      href={`/chat?c=${c.id}`}
+                      href={`/office/chat?c=${c.id}`}
                       prefetch={false}
                       className={cn(
                         'flex items-start gap-2 px-3 py-2.5 text-sm transition-colors',

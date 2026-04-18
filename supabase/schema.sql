@@ -32,6 +32,8 @@ CREATE TABLE student_profiles (
   name_encrypted BYTEA, -- AES-256 암호화 (외부 전송용)
   gender TEXT,
   admission_year INTEGER NOT NULL, -- 입학년도
+  auth_user_id UUID UNIQUE REFERENCES auth.users(id) ON DELETE SET NULL, -- 학생 로그인용
+  password_changed BOOLEAN DEFAULT false, -- 초기 비밀번호 변경 여부
   is_active BOOLEAN DEFAULT true, -- false = 졸업/전출
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()

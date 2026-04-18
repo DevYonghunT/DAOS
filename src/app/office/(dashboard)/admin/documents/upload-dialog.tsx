@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
   CheckCircle2,
-  FileText,
   Loader2,
   Sparkles,
   Upload,

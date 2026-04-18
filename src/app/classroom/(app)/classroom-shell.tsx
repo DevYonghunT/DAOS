@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import {
   GraduationCap,
   LogOut,
@@ -26,14 +26,13 @@ type RoomSummary = {
 
 type Props = {
   userName: string
-  userType: 'teacher' | 'student'
+
   isTeacher: boolean
   children: React.ReactNode
 }
 
-export function ClassroomShell({ userName, userType, isTeacher, children }: Props) {
+export function ClassroomShell({ userName, isTeacher, children }: Props) {
   const pathname = usePathname()
-  const router = useRouter()
   const [rooms, setRooms] = useState<RoomSummary[]>([])
   const [loading, setLoading] = useState(true)
 

@@ -306,13 +306,7 @@ export async function POST(req: Request) {
           return
         }
 
-        // 이전 버전 비활성화
-        await supabase
-          .from('document_versions')
-          .update({ is_current: false })
-          .eq('document_id', documentId)
-
-        // 새 버전 INSERT
+        // 새 버전 INSERT (먼저 — is_current=false 상태로 생성)
         send('progress', { step: 'saving', percent: 94, message: '버전 및 청크 저장 중...' })
         const { data: version, error: vErr } = await supabase
           .from('document_versions')
@@ -321,7 +315,7 @@ export async function POST(req: Request) {
             version: newVersion,
             storage_path: storagePath,
             effective_date: effectiveDate || null,
-            is_current: true,
+            is_current: false, // 아직 false — 청크 완료 후 true로 전환
             full_text: fullText,
           })
           .select('id')
@@ -346,10 +340,23 @@ export async function POST(req: Request) {
           .from('document_chunks')
           .insert(chunkRows)
         if (chunkErr) {
+          // 청크 실패 → 불완전 버전 삭제 (원자성 보장)
+          await supabase.from('document_versions').delete().eq('id', version.id)
           send('error', { message: `청크 저장 실패: ${chunkErr.message}` })
           controller.close()
           return
         }
+
+        // 모든 저장 성공 → 이제 이전 버전 비활성화 + 새 버전 활성화 (원자적 전환)
+        await supabase
+          .from('document_versions')
+          .update({ is_current: false })
+          .eq('document_id', documentId)
+          .neq('id', version.id)
+        await supabase
+          .from('document_versions')
+          .update({ is_current: true })
+          .eq('id', version.id)
 
         // ── 완료 ────────────────────────────────────────
         send('progress', { step: 'done', percent: 100, message: '업로드 완료!' })

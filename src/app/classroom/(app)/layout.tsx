@@ -29,7 +29,6 @@ export default async function ClassroomLayout({
   return (
     <ClassroomShell
       userName={displayName}
-      userType={ctx.type}
       isTeacher={isTeacher(ctx)}
     >
       {children}

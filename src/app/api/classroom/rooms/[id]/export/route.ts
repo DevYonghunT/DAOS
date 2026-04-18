@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserContext } from '@/lib/auth/context'
+import { verifyRoomMember } from '@/lib/classroom/access'
 import { format } from 'date-fns'
 
 export const runtime = 'nodejs'
@@ -13,6 +14,9 @@ export async function GET(_req: Request, { params }: Params) {
   const supabase = await createClient()
   const ctx = await getCurrentUserContext(supabase)
   if (!ctx) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  if (!(await verifyRoomMember(supabase, id, ctx))) {
+    return NextResponse.json({ error: 'not_a_member' }, { status: 403 })
+  }
 
   // 방 정보
   const { data: room } = await supabase

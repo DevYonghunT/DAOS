@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUserContext, isTeacher } from '@/lib/auth/context'
-import { GraduationCap, MessageCircle, Users } from 'lucide-react'
+import { GraduationCap, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'

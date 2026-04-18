@@ -5,7 +5,6 @@ import {
   FileText,
   CheckSquare,
   BookOpen,
-  Users,
   GraduationCap,
   Settings,
   type LucideIcon,
